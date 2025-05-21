@@ -155,5 +155,18 @@ public class App {
         System.out.println("LIRE TOUTES LES RESERVATIONS:\n");
         reservationList = reservationDao.tout();
         for (Reservation r : reservationList) System.out.println(r.toString());
+
+        // BONUS 
+        // Lister toutes les réservations faites par un utilisateur donné, triées par date.
+        // System.out.println("===== BONUS =====\n");
+        // System.out.println("===== SEARCH RESERVATION BY USER ID ORDER BY =====\n");
+        // for (Reservation r : reservationDao.chercherReservationTriParDate(utilisateur1.getId())) System.out.println(r);
+        
+        // CLEAN UP
+        for (Reservation r : reservationList) reservationDao.supprimer(r.getId());
+        for (Utilisateur u : utilisateurList) utilisateurDao.supprimer(u.getId());
+        for (BorneRecharge b : borneList) borneDao.supprimer(b.getId());
+        for (LieuRecharge l : lieuList) lieuDao.supprimer(l.getId());
+        
     }
 }
