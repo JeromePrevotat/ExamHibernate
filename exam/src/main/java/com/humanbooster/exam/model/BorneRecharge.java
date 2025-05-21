@@ -32,7 +32,7 @@ public class BorneRecharge {
     @JoinColumn(name="lieu_id")
     private LieuRecharge lieu_id;
 
-    @OneToMany(targetEntity=Reservation.class, mappedBy="borne_id", cascade=CascadeType.ALL, orphanRemoval=true, fetch = FetchType.LAZY)
+    @OneToMany(targetEntity=Reservation.class, mappedBy="borne", cascade=CascadeType.ALL, fetch = FetchType.LAZY)
     @OnDelete(action = OnDeleteAction.CASCADE)
     private List<Reservation> reservations;
 

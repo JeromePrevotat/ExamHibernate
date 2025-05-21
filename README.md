@@ -10,6 +10,14 @@ Managed by the Abstract Class GenericDaoImp which implements the GeneriDao Inter
 
 Managed by the Entity Dao
 
--   Description de votre implémentation
--   Explication de vos choix techniques
--   Résultat attendu des méthodes DAO testées
+## How to Run
+
+docker compose up --build app
+
+## DB Access
+
+docker run exec -it db bash
+mysql -p
+password : root
+
+(totally secure !)

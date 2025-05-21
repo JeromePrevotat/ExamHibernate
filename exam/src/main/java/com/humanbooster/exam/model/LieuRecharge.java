@@ -26,7 +26,7 @@ public class LieuRecharge {
     @NotBlank
     private String adresse; //Class ?
 
-    @OneToMany(targetEntity=BorneRecharge.class, mappedBy="borne_id", cascade=CascadeType.ALL, orphanRemoval=true, fetch = FetchType.LAZY)
+    @OneToMany(targetEntity=BorneRecharge.class, mappedBy="lieu_id", cascade=CascadeType.ALL, fetch = FetchType.LAZY)
     @OnDelete(action = OnDeleteAction.CASCADE)
     private List<BorneRecharge> bornes;
 
@@ -80,9 +80,9 @@ public class LieuRecharge {
         sb.append("=== Lieu de Recharge ").append(this.getId()).append(" ===").append("\n")
             .append("Nom: ").append(this.getNom()).append("\n")
             .append("Adresse: ").append(this.getAdresse()).append("\n")
-            .append("Bornes: ").append(
-                (this.getBornes() == null) ? null : this.getBornes().toString()
-            ).append("\n");
+            // .append("Bornes: ").append(
+            //     (this.getBornes() == null) ? null : this.getBornes().toString())
+            .append("\n");
         return sb.toString();
     }
 
