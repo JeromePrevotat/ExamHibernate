@@ -32,8 +32,7 @@ public class Reservation {
 
     public Reservation() {}
     
-    public Reservation(long id, Utilisateur utilisateur_id, BorneRecharge borne, Date dateDebut, Date dateFin, StatutReservation statut){
-        this.id = id;
+    public Reservation(Utilisateur utilisateur_id, BorneRecharge borne, Date dateDebut, Date dateFin, StatutReservation statut){
         this.utilisateur_id = utilisateur_id;
         this.borne = borne;
         this.dateDebut = dateDebut;
