@@ -1,22 +1,50 @@
 package com.humanbooster.exam.model;
 
-public class BorneRecharge {
-    private static int idTotal = 0;
-    private int id;
-    private EtatBorne etat;
-    private double tarifHoraire;
+import java.util.List;
 
-    public BorneRecharge() { idTotal++; }
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
+
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
+import jakarta.validation.constraints.NotBlank;
+
+@Entity
+public class BorneRecharge {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private long id;
+    
+    @NotBlank
+    private EtatBorne etat;
+    
+    @NotBlank
+    private double tarifHoraire;
+    
+    @ManyToOne
+    @JoinColumn(name="lieu_id")
+    private LieuRecharge lieu_id;
+
+    @OneToMany(targetEntity=Reservation.class, mappedBy="borne_id", cascade=CascadeType.ALL, orphanRemoval=true, fetch = FetchType.LAZY)
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    private List<Reservation> reservations;
+
+    public BorneRecharge() {}
 
     public BorneRecharge(double tarifHoraire){
-        this.id = idTotal;
         this.etat = EtatBorne.DISPONIBLE;
         this.tarifHoraire = tarifHoraire;
-        idTotal++;
     }
 
     // GETTER
-    public int getId() {
+    public long getId() {
         return this.id;
     }
 
@@ -28,8 +56,16 @@ public class BorneRecharge {
         return this.tarifHoraire;
     }
     
+    public LieuRecharge getLieu_id() {
+        return lieu_id;
+    }
+
+    public List<Reservation> getReservations() {
+        return reservations;
+    }
+
     // SETTER
-    public void setId(int id) {
+    public void setId(long id) {
         this.id = id;
     }
 
@@ -41,17 +77,22 @@ public class BorneRecharge {
         this.tarifHoraire = tarifHoraire;
     }
 
+    public void setLieu_id(LieuRecharge lieu_id) {
+        this.lieu_id = lieu_id;
+    }
+
+    public void setReservations(List<Reservation> reservations) {
+        this.reservations = reservations;
+    }
+
     // METHODS
     @Override
     public String toString(){
         StringBuilder sb = new StringBuilder();
-        sb.append("=== Borne ").append(this.id).append(" ===").append("\n")
-            .append("Etat: ").append(this.etat).append("\n")
-            .append("Tarif Horaire: ").append(this.tarifHoraire).append("\n");
+        sb.append("=== Borne ").append(this.getId()).append(" ===").append("\n")
+            .append("Etat: ").append(this.getEtat()).append("\n")
+            .append("Tarif Horaire: ").append(this.getTarifHoraire()).append("\n");
         return sb.toString();
     }
-
-    
-
     
 }
