@@ -1,9 +1,18 @@
 package com.humanbooster.exam.model;
 
+import java.util.List;
+
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
+
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
+import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 
 @Entity
@@ -13,7 +22,7 @@ public class Utilisateur {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
     
-    @NotBlank
+    @Email
     private String email;
 
     @NotBlank
@@ -26,6 +35,10 @@ public class Utilisateur {
     
     @NotBlank
     private RoleUtilisateur role;
+
+    @OneToMany(targetEntity=Reservation.class, mappedBy="utilisateur_id", cascade=CascadeType.ALL, orphanRemoval=true, fetch = FetchType.LAZY)
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    private List<Reservation> reservations;
 
     public Utilisateur() {}
     
@@ -62,6 +75,10 @@ public class Utilisateur {
         return this.role;
     }
 
+    public List<Reservation> getReservations(){
+        return reservations;
+    }
+
     // SETTER
     public void setId(long id) {
         this.id = id;
@@ -85,6 +102,10 @@ public class Utilisateur {
 
     public void setRole(RoleUtilisateur role) {
         this.role = role;
+    }
+
+    public void setReservations(List<Reservation> reservations){
+        this.reservations = reservations;
     }
 
     // METHODS
